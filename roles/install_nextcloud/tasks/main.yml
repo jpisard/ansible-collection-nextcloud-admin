@@ -8,6 +8,7 @@
 
 - name: "Install PHP packages"
   ansible.builtin.include_tasks: php_install.yml
+  when: nextcloud_install_websrv
   tags:
     - install_apps
 
@@ -63,7 +64,7 @@
 
 - name: Downloading Nextcloud
   ansible.builtin.include_tasks: ./nc_download.yml
-  when: not nc_nextcloud_installed.stat.exists
+  when: (not nc_nextcloud_installed.stat.exists) and nextcloud_install_websrv
 
 - name: Check Nextcloud configuration exists.
   ansible.builtin.stat:
@@ -80,13 +81,14 @@
 - name: Nextcloud installation
   ansible.builtin.include_tasks: ./nc_installation.yml
   when: |
-    (not nc_nextcloud_conf.stat.exists) or
-    (nc_nextcloud_configured.rc is defined and nc_nextcloud_configured.rc != 0)
+    ((not nc_nextcloud_conf.stat.exists)  or
+    (nc_nextcloud_configured.rc is defined and nc_nextcloud_configured.rc != 0)) and nextcloud_install_websrv
 
 - name: Install Nextcloud Apps
   when:
     - nextcloud_apps is defined
     - nextcloud_apps is mapping
+    - nextcloud_install_websrv
   tags:
     - install_apps
     - patch_user_saml_app
@@ -124,17 +126,19 @@
   become_flags: "{{ ansible_become_flags | default(omit) }}"
   register: nc_indices_cmd
   changed_when: '"Done" not in nc_indices_cmd.stdout'
-  when: nextcloud_install_db
+  when: nextcloud_install_websrv
+    #when: nextcloud_install_db
 
 - name: "[Main] - Patch from the app 'user_saml' the file SAMLController.php."
   when:
     - nextcloud_patch_user_saml_app
     - nc_available_apps.enabled['user_saml'] is defined or nc_available_apps.disabled['user_saml'] is defined
+    - nextcloud_install_websrv
   tags:
     - patch_user_saml_app
   vars:
     pattern: '.*\$this->session->set\(.user_saml\.samlUserData.,\s+\$_SERVER\);.*'
-    file2patch: "{{ nextcloud_webroot + '/apps/user_saml/lib/Controller/SAMLController.php' }}"
+    file2patch: "{{ nextcloud_webroot + 'apps/user_saml/lib/Controller/SAMLController.php' }}"
   block:
     - name: "[Main] - Check if SAMLController.php can be patched."
       ansible.builtin.slurp:
