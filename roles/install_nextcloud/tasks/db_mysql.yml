@@ -30,6 +30,16 @@
     enabled: "{{ nextcloud_db_enabled_on_startup }}"
   register: mysql_service_configuration
 
+- name: "[mySQL Allow remote hosts to connect (Debian)"
+  lineinfile:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    backrefs: yes
+    regexp: '^bind-address'
+    line: 'bind-address            = {{ nextcloud_db_bind_address }}'
+    state: present
+  when: ansible_os_family == "Debian" and nextcloud_db_backend == "mariadb"
+  notify: Restart mysql
+
 - name: "[mySQL] - Get list of hosts for the root user."
   ansible.builtin.command: mysql -NBe
     "SELECT Host
