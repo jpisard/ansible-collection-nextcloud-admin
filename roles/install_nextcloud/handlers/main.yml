@@ -20,6 +20,11 @@
     name: "{{ nextcloud_websrv }}"
     state: reloaded
 
+- name: Reload reverseproxy
+  ansible.builtin.service:
+    name: "{{ nextcloud_reverseproxy }}"
+    state: reloaded
+
 - name: Start php-fpm
   ansible.builtin.service:
     name: php{{ php_ver }}-fpm
