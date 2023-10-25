@@ -158,7 +158,7 @@
   block:
     - name: Configure Nginx reverse proxy.
       ansible.builtin.include_tasks: ./reverseproxy_nginx.yml
-      when: nextcloud_websrv in ["nginx"]
+      when: nextcloud_reverseproxy in ["nginx"]
 #    - name: Configure Apache reverse proxy.
 #      ansible.builtin.include_tasks: ./reverseproxy_apache.yml
-#      when: nextcloud_websrv in ["apache2"]
+#      when: nextcloud_reverseproxy in ["apache2"]

@@ -1,4 +1,9 @@
-- name: "[REVERSEPROXY NGINX] -  generate Nextcloud configuration for nginx"
+- name: "[INSTALL] - Reverse proxy is installed."
+  ansible.builtin.package:
+    name: {{ nextcloud_reverseproxy }}
+    state: present
+
+- name: "[REVERSEPROXY NGINX] -  Generate Nextcloud configuration for nginx"
   ansible.builtin.template:
     dest: /etc/nginx/sites-available/reverseproxy_{{ nextcloud_instance_name }}.cnf
     src: "{{ nextcloud_reverseproxy_template }}"
