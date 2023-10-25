@@ -77,6 +77,12 @@ nextcloud_config_settings:
   - { name: 'mysql.utf8mb4', value: true }
   - { name: 'updater.release.channel', value: 'production' }  # production/stable/daily/beta
 
+# [REVERSE PROXY]
+nextcloud_install_reverseproxy: true
+nextcloud_reverseproxy: "nginx" # Reverse proxy Type "apache2"/"nginx"
+nextcloud_websrv_address: "127.0.0.1" # Network address of websrv
+nextcloud_reverseproxy_template: "templates/reverseproxy_{{ nextcloud_reverseproxy }}_nc.j2"
+
 # [DATABASE]
 nextcloud_install_db: true
 nextcloud_db_host: "127.0.0.1"
@@ -96,6 +102,8 @@ nextcloud_mysql_root_pwd_update: false
 # [TLS] parameters used in the apache2 & nginx templates
 ##  max file's size allowed to be uploaded on the server
 nextcloud_max_upload_size: 512m  # in Byte or human readable size notation (g/m/k)
+##  max upload time allowed on the server
+nextcloud_max_upload_time: 120s # in Seconds
 nextcloud_install_tls: true
 nextcloud_tls_enforce: true
 nextcloud_mozilla_modern_ssl_profile: false  # when false, intermediate profile is used
