@@ -1,0 +1,13 @@
+- name: "[REVERSEPROXY NGINX] -  generate Nextcloud configuration for nginx"
+  ansible.builtin.template:
+    dest: /etc/nginx/sites-available/reverseproxy_{{ nextcloud_instance_name }}.cnf
+    src: "{{ nextcloud_reverseproxy_template }}"
+    mode: 0640
+  notify: Reload http
+
+- name: "[REVERSEPROXY NGINX] -  Enable Nextcloud in nginx conf"
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/reverseproxy_{{ nextcloud_instance_name }}
+    src: /etc/nginx/sites-available/reverseproxy_{{ nextcloud_instance_name }}.cnf
+    state: link
+  notify: Reload http
