@@ -1,6 +1,6 @@
 - name: "[INSTALL] - Reverse proxy is installed."
   ansible.builtin.package:
-    name: {{ nextcloud_reverseproxy }}
+    name: '{{ nextcloud_reverseproxy }}'
     state: present
 
 - name: "[REVERSEPROXY NGINX] -  Generate Nextcloud configuration for nginx"
