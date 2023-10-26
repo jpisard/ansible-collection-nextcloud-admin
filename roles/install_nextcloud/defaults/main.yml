@@ -120,7 +120,7 @@ nextcloud_hsts: false  # recommended >= 15552000
 # nextcloud_tls_src_chain: /path/to/cert/chain
 # nextcloud_tls_src_cert: /path/to/cert
 # nextcloud_tls_src_cert_key: /path/to/cert/key
-nextcloud_tls_session_cache_size: 50m  # in Byte or human readable size notation (g/m/k)
+nextcloud_tls_session_cache_size: 10m  # in Byte or human readable size notation (g/m/k)
 
 # [APPS]
 nextcloud_apps: {}
@@ -131,5 +131,5 @@ nextcloud_patch_user_saml_app: false  # Apply Workaround to lower-case REALM for
 # nextcloud_mysql_root_pwd: "secret"
 upgrade_packages_first: false
 cert_path: "/etc/ssl/"
-server_os: {{ ansible_distribution | lower }}
-server_release: {{ ansible_distribution_release }}
+server_os: "{{ ansible_distribution | lower }}"
+server_release: "{{ ansible_distribution_release }}"

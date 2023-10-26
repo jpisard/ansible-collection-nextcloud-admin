@@ -9,7 +9,7 @@ server {
 {% if nextcloud_ipv6 %}
     listen [::]:80;
 {% endif %}
-    server_name '{{ nextcloud_trusted_domain }}';
+    server_name "{{ nextcloud_instance_name }}";
 
     # Enforce HTTPS
     return 301 https://$server_name$request_uri;
@@ -24,7 +24,7 @@ server {
 {% endif %}
 {% endif %}
 
-    server_name '{{ nextcloud_trusted_domain }}';
+    server_name "{{ nextcloud_instance_name }}";
 
     access_log /var/log/nginx/{{ nextcloud_instance_name }}-access.log;
     error_log  /var/log/nginx/{{ nextcloud_instance_name }}-error.log error;

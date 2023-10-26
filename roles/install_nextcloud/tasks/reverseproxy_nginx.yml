@@ -15,7 +15,7 @@
     line: 'include /usr/share/naxsi/naxsi_core.rules;'
   notify: Reload reverseproxy
 
-    - name: "[REVERSEPROXY NGINX] - Generate naxsi configuration for nginx"
+- name: "[REVERSEPROXY NGINX] - Generate naxsi configuration for nginx"
   ansible.builtin.template:
     dest: /etc/nginx/naxsi.rules
     src: "templates/reverseproxy_naxsi_nc.j2"
