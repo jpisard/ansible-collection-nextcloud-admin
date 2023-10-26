@@ -131,3 +131,5 @@ nextcloud_patch_user_saml_app: false  # Apply Workaround to lower-case REALM for
 # nextcloud_mysql_root_pwd: "secret"
 upgrade_packages_first: false
 cert_path: "/etc/ssl/"
+server_os: {{ ansible_distribution | lower }}
+server_release: {{ ansible_distribution_release }}

@@ -19,6 +19,11 @@
   ansible.builtin.service:
     name: "{{ nextcloud_websrv }}"
     state: reloaded
+    
+- name: Stop reverseproxy
+  ansible.builtin.service:
+    name: "{{ nextcloud_reverseproxy }}"
+    state: stopped
 
 - name: Reload reverseproxy
   ansible.builtin.service:
