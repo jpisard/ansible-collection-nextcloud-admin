@@ -34,6 +34,15 @@ php_pkg_spe:
   - "php{{ php_ver }}-zip"
 php_socket: "/run/php/php{{ php_ver }}-fpm.sock"
 php_memory_limit: 512M
+php_upload_max_filesize: 30G
+php_post_max_size: 30G
+php_expose_php: Off
+php_max_execution_time: 7200
+php_max_input_time: 7200
+php_output_buffering: O
+php_upload_tmp_dir: "/tmp/"
+
+nextcloud_install_phphandler: true
 
 # [NEXTCLOUD CONFIG]
 nextcloud_trusted_domain:

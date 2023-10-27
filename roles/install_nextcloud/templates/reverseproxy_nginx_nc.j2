@@ -60,9 +60,6 @@ server {
     client_max_body_size {{ nextcloud_max_upload_size }};
     client_body_timeout {{ nextcloud_max_upload_time }};
 
-    location / {
-        try_files $uri $uri/ =404;
-    }
 
     location / {
         proxy_set_header Host $host;
