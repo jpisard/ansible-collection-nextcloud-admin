@@ -50,7 +50,7 @@
     - { regexp: 'expose_php', line: 'expose_php={{ php_expose_php }}'}
     - { regexp: 'max_execution_time', line: 'max_execution_time={{ php_max_execution_time }}'}
     - { regexp: 'max_input_time', line: 'max_input_time={{ php_max_input_time }}'}
-    - { regexp: 'output_buffering', line: 'output_buffering {{ php_output_buffering }}'}
+    - { regexp: 'output_buffering', line: 'output_buffering={{ php_output_buffering }}'}
     - { regexp: 'upload_tmp_dir', line: 'upload_tmp_dir={{ php_upload_tmp_dir }}'}
     # validate: "/usr/sbin/{{ php_bin }} -t #%s"
   notify: Reload php-fpm
