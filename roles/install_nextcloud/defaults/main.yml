@@ -33,7 +33,7 @@ php_pkg_spe:
   - "php{{ php_ver }}-xml"
   - "php{{ php_ver }}-zip"
 php_socket: "/run/php/php{{ php_ver }}-fpm.sock"
-php_memory_limit: 3G
+php_memory_limit: 512M
 php_upload_max_filesize: 30G
 php_post_max_size: 30G
 php_expose_php: Off
@@ -61,9 +61,9 @@ nextcloud_websrv: "apache2"  # "apache2"/"nginx"
 nextcloud_websrv_user: "{{ os_config_ref[ansible_os_family | lower].defaults.nextcloud_websrv_user }}"
 nextcloud_websrv_group: "{{ os_config_ref[ansible_os_family | lower].defaults.nextcloud_websrv_group }}"
 nextcloud_disable_websrv_default_site: false
-nextcloud_websrv_template: "templates/{{ nextcloud_websrv }}_nc.j2"
-nextcloud_webroot: "/opt/nextcloud"
-nextcloud_data_dir: "/var/ncdata"
+nextcloud_websrv_template: "templates/{{ nextcloud_websrv }}_nc_exaion.j2"
+nextcloud_webroot: "/opt/nextcloud/"
+nextcloud_data_dir: "/opt/nextcloud/data"
 nextcloud_admin_name: "admin"
 # nextcloud_admin_pwd: "secret"
 
@@ -96,18 +96,20 @@ nextcloud_reverseproxy_template: "templates/reverseproxy_{{ nextcloud_reversepro
 # [DATABASE]
 nextcloud_install_db: true
 nextcloud_db_host: "127.0.0.1"
+nextcloud_db_admin_host: "%"
 nextcloud_db_backend: "mysql"  # mysql/mariadb/pgsql
-mysql_daemon: >-
-  {{
-  os_config_ref[ansible_distribution | lower][ansible_distribution_release | lower].mysql_daemon |
-  default(os_config_ref[ansible_distribution | lower].defaults.mysql_daemon)
-  }}
+nextcloud_db_bind_address: "0.0.0.0"
 nextcloud_db_enabled_on_startup: true
 nextcloud_db_name: "nextcloud"
 nextcloud_db_admin: "ncadmin"
 # nextcloud_db_pwd: "secret"
 # Set this to `true` to forcibly update the root password.
 nextcloud_mysql_root_pwd_update: false
+mysql_daemon: >-
+  {{
+  os_config_ref[ansible_distribution | lower][ansible_distribution_release | lower].mysql_daemon |
+  default(os_config_ref[ansible_distribution | lower].defaults.mysql_daemon)
+  }}
 
 # [TLS] parameters used in the apache2 & nginx templates
 ##  max file's size allowed to be uploaded on the server

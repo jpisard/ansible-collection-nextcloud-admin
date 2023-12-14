@@ -6,14 +6,13 @@
 
 - name: "[INSTALL] - Install naxsi module on nginx"
   ansible.builtin.apt:
-    deb: "https://github.com/nbs-system/naxsi/releases/download/1.3/{{ server_os }}-{{ server_release }}-libnginx-mod-http-naxsi_1.3_amd64.deb"
+    deb: "https://github.com/wargio/naxsi/releases/download/1.6/{{ server_os }}-{{ server_release }}-libnginx-mod-http-naxsi_1.6_amd64.deb"
 
-- name: "[REVERSEPROXY NGINX] - Add naxsi to nginx.conf"
-  ansible.builtin.lineinfile:
-    path: /etc/{{ nextcloud_reverseproxy }}/{{ nextcloud_reverseproxy }}.conf
-    insertafter: '# Basic Settings\n\t##\n'
-    line: 'include /usr/share/naxsi/naxsi_core.rules;'
-  notify: Reload reverseproxy
+- name: "[REVERSEPROXY NGINX] - Create link on naxsi_core.rules"
+  ansible.builtin.file:
+    src: /usr/share/naxsi/naxsi_core.rules
+    dest: /etc/nginx/conf.d/naxsi_core.rules.conf
+    state: link
 
 - name: "[REVERSEPROXY NGINX] - Generate naxsi configuration for nginx"
   ansible.builtin.template:
